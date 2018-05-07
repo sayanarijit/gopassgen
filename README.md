@@ -2,6 +2,12 @@
 
 Policy based password generator based on GO
 
+### Install
+
+```bash
+go get github.com/sayanarijit/gopassgen
+```
+
 ### Example Usage
 
 ```go
