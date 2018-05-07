@@ -23,6 +23,7 @@ func main() {
     p.MinDigits = 10
     p.MinSpclChars = 5
     password := gopassgen.Generate(p)
+    fmt.Println(password)
 }
 ```
 
