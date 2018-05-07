@@ -1,7 +1,7 @@
 package gopassgen
 
 /***
-Version		: 0.1.0
+Version		: 0.1.1
 Author		: Arijit Basu <sayanarijit@gmail.com>
 Docs		: https://github.com/sayanarijit/gopassgen#README
 
@@ -69,16 +69,9 @@ func Generate(p Policy) string {
 	Shuffle(SpclChars)
 
 	passwd := CapsAlpha[:p.MinCapsAlpha]
-
-	if p.MinSmallAlpha > 0 {
-		passwd = append(passwd, SmallAlpha[:p.MinSmallAlpha]...)
-	}
-	if p.MinDigits > 0 {
-		passwd = append(passwd, Digits[:p.MinDigits]...)
-	}
-	if p.MinSpclChars > 0 {
-		passwd = append(passwd, SpclChars[:p.MinSpclChars]...)
-	}
+    passwd = append(passwd, SmallAlpha[:p.MinSmallAlpha]...)
+    passwd = append(passwd, Digits[:p.MinDigits]...)
+    passwd = append(passwd, SpclChars[:p.MinSpclChars]...)
 
 	if len(passwd) < p.MinLength {
 		requiredMore := p.MinLength - len(passwd)
