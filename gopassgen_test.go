@@ -5,6 +5,20 @@ import (
 	"testing"
 )
 
+func TestZeroLenPassword(t *testing.T) {
+	p := NewPolicy()
+	p.MinLength = 0
+	p.MaxLength = 0
+
+	password := Generate(p)
+
+	fmt.Println("Zero length password:", password)
+
+	if len(password) != 0 {
+		t.Errorf("Length is expected to 0, but got %v", len(password))
+	}
+}
+
 func TestRandomPassword(t *testing.T) {
 	p := NewPolicy()
 	password := Generate(p)

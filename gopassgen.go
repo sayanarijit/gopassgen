@@ -75,7 +75,8 @@ func Shuffle(s []byte) {
 func Generate(p Policy) string {
 
 	// Character length based policies should not be negative
-	if p.MinLength*p.MaxLength*p.MinCapsAlpha*p.MinSmallAlpha*p.MinDigits*p.MinSpclChars < 0 {
+	if p.MinLength < 0 || p.MaxLength < 0 || p.MinCapsAlpha < 0 ||
+		p.MinSmallAlpha < 0 || p.MinDigits < 0 || p.MinSpclChars < 0 {
 		panic("Character length should not ne negative")
 	}
 
@@ -86,17 +87,12 @@ func Generate(p Policy) string {
 		p.MinLength = collectiveMinLength
 	}
 
-	// Max length should be greater than minimun length
+	// Max length should be greater than collective minimun length
 	if p.MinLength > p.MaxLength {
 		panic("Minimum length cannot be greater than maximum length")
 	}
 
-	// Max length should be sufficient to hold all minimum length policies
-	if p.MaxLength > 0 {
-		if collectiveMinLength > p.MaxLength {
-			panic("Maximum length is not sufficient")
-		}
-	} else {
+	if p.MaxLength == 0 {
 		return ""
 	}
 
@@ -104,7 +100,7 @@ func Generate(p Policy) string {
 	smallAlpha := []byte("abcdefghijklmnopqrstuvwxyz")
 	digits := []byte("0123456789")
 	spclChars := []byte("!@#$%^&*()-_=+,.?/:;{}[]~")
-	allChars := []byte("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+,.?/:;{}[]~")
+	allChars := []byte(string(capsAlpha) + string(smallAlpha) + string(digits) + string(spclChars))
 
 	passwd := CreateRandom(capsAlpha, p.MinCapsAlpha)
 
