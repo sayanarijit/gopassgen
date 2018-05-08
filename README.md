@@ -1,6 +1,6 @@
 # gopassgen
 
-Policy based password generator based on GO
+Policy based password generator library for Golang
 
 ### Install
 
