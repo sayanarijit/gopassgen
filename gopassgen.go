@@ -77,7 +77,7 @@ func Generate(p Policy) string {
 	// Character length based policies should not be negative
 	if p.MinLength < 0 || p.MaxLength < 0 || p.MinCapsAlpha < 0 ||
 		p.MinSmallAlpha < 0 || p.MinDigits < 0 || p.MinSpclChars < 0 {
-		panic("Character length should not ne negative")
+		panic("Character length should not be negative")
 	}
 
 	collectiveMinLength := p.MinCapsAlpha + p.MinSmallAlpha + p.MinDigits + p.MinSpclChars
