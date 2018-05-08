@@ -1,5 +1,7 @@
 # gopassgen
 
+[![GoDoc](https://godoc.org/github.com/sayanarijit/gopassgen?status.svg)](https://godoc.org/github.com/sayanarijit/gopassgen)
+
 Policy based password generator library for Golang
 
 ### Install
