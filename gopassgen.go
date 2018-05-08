@@ -1,7 +1,7 @@
 package gopassgen
 
 /*
-Version		: 0.2.0
+Version		: 0.3.0
 Author		: Arijit Basu <sayanarijit@gmail.com>
 Docs		: https://github.com/sayanarijit/gopassgen#README
 
@@ -63,9 +63,9 @@ func CreateRandom(bs []byte, length int) []byte {
 
 // Shuffle the given byte string
 func Shuffle(s []byte) {
-	rand.Seed(time.Now().UnixNano())
 	n := len(s)
 	for i := n - 1; i > 0; i-- {
+		rand.Seed(time.Now().UnixNano())
 		j := rand.Intn(i + 1)
 		s[i], s[j] = s[j], s[i]
 	}
@@ -79,6 +79,13 @@ func Generate(p Policy) string {
 		panic("Character length should not ne negative")
 	}
 
+	collectiveMinLength := p.MinCapsAlpha + p.MinSmallAlpha + p.MinDigits + p.MinSpclChars
+
+	// Min length is the collective min length
+	if collectiveMinLength > p.MinLength {
+		p.MinLength = collectiveMinLength
+	}
+
 	// Max length should be greater than minimun length
 	if p.MinLength > p.MaxLength {
 		panic("Minimum length cannot be greater than maximum length")
@@ -86,7 +93,7 @@ func Generate(p Policy) string {
 
 	// Max length should be sufficient to hold all minimum length policies
 	if p.MaxLength > 0 {
-		if p.MinCapsAlpha+p.MinSmallAlpha+p.MinDigits+p.MinSpclChars > p.MaxLength {
+		if collectiveMinLength > p.MaxLength {
 			panic("Maximum length is not sufficient")
 		}
 	} else {
@@ -96,8 +103,8 @@ func Generate(p Policy) string {
 	capsAlpha := []byte("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
 	smallAlpha := []byte("abcdefghijklmnopqrstuvwxyz")
 	digits := []byte("0123456789")
-	spclChars := []byte("!@#$%^&*()-_=+,.?/:;{}[]`~")
-	allChars := []byte("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+,.?/:;{}[]`~")
+	spclChars := []byte("!@#$%^&*()-_=+,.?/:;{}[]~")
+	allChars := []byte("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+,.?/:;{}[]~")
 
 	passwd := CreateRandom(capsAlpha, p.MinCapsAlpha)
 
@@ -105,9 +112,11 @@ func Generate(p Policy) string {
 	passwd = append(passwd, CreateRandom(digits, p.MinDigits)...)
 	passwd = append(passwd, CreateRandom(spclChars, p.MinSpclChars)...)
 
-	requiredMore := p.MinLength - len(passwd)
-	if requiredMore > 0 {
-		passwd = append(passwd, CreateRandom(allChars, requiredMore)...)
+	passLen := len(passwd)
+
+	if passLen < p.MaxLength {
+		randLength := random(p.MinLength, p.MaxLength)
+		passwd = append(passwd, CreateRandom(allChars, randLength-passLen)...)
 	}
 
 	Shuffle(passwd)

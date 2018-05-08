@@ -21,6 +21,8 @@ go get github.com/sayanarijit/gopassgen
 
 ### Example Usage
 
+* Generate a random password with 10 minimum digits and 5 special characters
+
 ```go
 package main
 
@@ -39,5 +41,43 @@ func main() {
     password := gopassgen.Generate(p)
 
     fmt.Println(password)
+}
+```
+
+* Quickly generate random password of given length using given characters
+
+```go
+package main
+
+import (
+    "fmt"
+    "github.com/sayanarijit/gopassgen"
+)
+
+func main() {
+
+    bsPassword := gopassgen.CreateRandom([]byte("ABCDwxyz1234$%^&"), 8) // Returns bytes array
+
+    fmt.Println(string(bsPassword))
+}
+```
+
+* Generate password by shuffling given characters
+
+```go
+package main
+
+import (
+    "fmt"
+    "github.com/sayanarijit/gopassgen"
+)
+
+func main() {
+
+    bsPassword := []byte("ABCDwxyz1234$%^&")
+
+    gopassgen.Shuffle(bsPassword)
+
+    fmt.Println(string(bsPassword))
 }
 ```
