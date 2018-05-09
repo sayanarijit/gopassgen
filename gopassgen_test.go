@@ -15,7 +15,7 @@ func TestZeroLenPassword(t *testing.T) {
 	fmt.Println("Zero length password:", password)
 
 	if len(password) != 0 {
-		t.Errorf("Length is expected to 0, but got %v", len(password))
+		t.Errorf("Length is expected to be 0, but got %v", len(password))
 	}
 }
 
@@ -62,7 +62,7 @@ func TestAllCaps10Chars(t *testing.T) {
 	p.MinCapsAlpha = 10
 	password := Generate(p)
 
-	fmt.Println("10 letter all captial password:", password)
+	fmt.Println("10 letter all capital password:", password)
 
 	if len(password) != 10 {
 		t.Errorf("Length is expected to be 10, but got %v", len(password))
