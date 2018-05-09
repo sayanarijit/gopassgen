@@ -14,8 +14,8 @@ go get github.com/sayanarijit/gopassgen
 
 | Policy option              | Variable      | Type | Default |
 | -------------------------- | ------------- | ---- | ------- |
-| Minimum length             | MinLength     | int  | 6       |
 | Maximum length             | MaxLength     | int  | 16      |
+| Minimum length             | MinLength     | int  | 6       |
 | Minimum capital letters    | MinCapsAlpha  | int  | 0       |
 | Minimum small letters      | MinSmallAlpha | int  | 0       |
 | Minimum digits             | MinDigits     | int  | 0       |
