@@ -23,7 +23,7 @@ go get github.com/sayanarijit/gopassgen
 
 ### Example Usage
 
-##### Generate a 16 character long password with minimum 2 digits, 2 special characters, 1 capital and 1 small letter
+#### Generate a 16 character long password with minimum 2 digits, 2 special characters, 1 capital and 1 small letter
 
 ```go
 package main
@@ -50,7 +50,7 @@ func main() {
 }
 ```
 
-##### Quickly generate random password of given length using given characters
+#### Quickly generate random password of given length using given characters
 
 ```go
 package main
@@ -68,7 +68,7 @@ func main() {
 }
 ```
 
-##### Generate password by shuffling given characters
+#### Generate password by shuffling given characters
 
 ```go
 package main
