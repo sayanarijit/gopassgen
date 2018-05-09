@@ -37,12 +37,12 @@ func main() {
 
     p := gopassgen.NewPolicy()
 
-	p.MaxLength = 16    // Maximum total length
-	p.MinLength = 16    // Minimum total length
-	p.MinDigits = 2     // Minimum digits
-	p.MinSpclChars = 2  // Minimum special characters
-	p.MinCapsAlpha = 1  // Minimum capital letters
-	p.MinSmallAlpha = 1 // Minimum small letters
+    p.MaxLength = 16    // Maximum total length
+    p.MinLength = 16    // Minimum total length
+    p.MinDigits = 2     // Minimum digits
+    p.MinSpclChars = 2  // Minimum special characters
+    p.MinCapsAlpha = 1  // Minimum capital letters
+    p.MinSmallAlpha = 1 // Minimum small letters
 
     password := gopassgen.Generate(p)
 
