@@ -4,13 +4,13 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/sayanarijit/gopassgen)](https://goreportcard.com/report/github.com/sayanarijit/gopassgen)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/sayanarijit/gopassgen/blob/master/LICENSE)
 
-### Install
+## Install
 
 ```bash
 go get github.com/sayanarijit/gopassgen
 ```
 
-### Available policy options
+## Available policy options
 
 | Policy option              | Variable      | Type | Default |
 | -------------------------- | ------------- | ---- | ------- |
@@ -21,9 +21,9 @@ go get github.com/sayanarijit/gopassgen
 | Minimum digits             | MinDigits     | int  | 0       |
 | Minimum special characters | MinSpclChars  | int  | 0       |
 
-### Example Usage
+## Example Usage
 
-* Generate a random password with 10 minimum digits and 5 special characters
+### Generate a 16 character long password with minimum 2 digits, 2 special characters, 1 capital and 1 small letter
 
 ```go
 package main
@@ -37,8 +37,12 @@ func main() {
 
     p := gopassgen.NewPolicy()
 
-    p.MinDigits = 10                     // Minimum digits
-    p.MinSpclChars = 5                   // Minimum special characters
+    p.MaxLength = 16        // Maximum total length
+    p.MinLength = 16        // Minimum total length
+    p.MinDigits = 2         // Minimum digits
+    p.MinSpclChars = 2      // Minimum special characters
+    p.MinCapsAlpha = 1      // Minimum capital letters
+    p.MinSmallAlpha = 1     // Minimum small letters
 
     password := gopassgen.Generate(p)
 
@@ -46,7 +50,7 @@ func main() {
 }
 ```
 
-* Quickly generate random password of given length using given characters
+### Quickly generate random password of given length using given characters
 
 ```go
 package main
@@ -64,7 +68,7 @@ func main() {
 }
 ```
 
-* Generate password by shuffling given characters
+### Generate password by shuffling given characters
 
 ```go
 package main

@@ -1,16 +1,19 @@
 package gopassgen
 
 /*
-Version		: 0.3.0
+Version		: 0.3.1
 Author		: Arijit Basu <sayanarijit@gmail.com>
 Docs		: https://github.com/sayanarijit/gopassgen#README
 
 Usage:
 	p := gopassgen.NewPolicy()
 
-	p.MinDigits = 5
-	p.MinCapsAlpha = 2
-	p.MinSpclChars = 2
+	p.MaxLength = 16    // Maximum total length
+	p.MinLength = 16    // Minimum total length
+	p.MinDigits = 2     // Minimum digits
+	p.MinSpclChars = 2  // Minimum special characters
+	p.MinCapsAlpha = 1  // Minimum capital letters
+	p.MinSmallAlpha = 1 // Minimum small letters
 
 	password := gopassgen.Generate(p)
 */
@@ -44,6 +47,9 @@ func NewPolicy() Policy {
 }
 
 func random(min, max int) int {
+	if min == max {
+		return min
+	}
 	rand.Seed(time.Now().Unix())
 	return rand.Intn(max-min) + min
 }
@@ -62,12 +68,12 @@ func CreateRandom(bs []byte, length int) []byte {
 }
 
 // Shuffle the given byte string
-func Shuffle(s []byte) {
-	n := len(s)
+func Shuffle(bs []byte) {
+	n := len(bs)
 	for i := n - 1; i > 0; i-- {
 		rand.Seed(time.Now().UnixNano())
 		j := rand.Intn(i + 1)
-		s[i], s[j] = s[j], s[i]
+		bs[i], bs[j] = bs[j], bs[i]
 	}
 }
 
