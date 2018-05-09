@@ -1,7 +1,5 @@
 # gopassgen
 
-Policy based password generator library for Golang
-
 [![GoDoc](https://godoc.org/github.com/sayanarijit/gopassgen?status.svg)](https://godoc.org/github.com/sayanarijit/gopassgen)
 [![Go Report Card](https://goreportcard.com/badge/github.com/sayanarijit/gopassgen)](https://goreportcard.com/report/github.com/sayanarijit/gopassgen)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/sayanarijit/gopassgen/blob/master/LICENSE)
