@@ -24,23 +24,31 @@ import (
 
 // Policy of password to be passed in Generate() function
 type Policy struct {
-	MinLength     int // Minimum length of password
-	MaxLength     int // Maximum length of password
-	MinCapsAlpha  int // Minimum length of capital letters
-	MinSmallAlpha int // Minimum length of small letters
-	MinDigits     int // Minimum length of digits
-	MinSpclChars  int // Minimum length of special characters
+	MinLength      int    // Minimum length of password
+	MaxLength      int    // Maximum length of password
+	MinCapsAlpha   int    // Minimum length of capital letters
+	MinSmallAlpha  int    // Minimum length of small letters
+	MinDigits      int    // Minimum length of digits
+	MinSpclChars   int    // Minimum length of special characters
+	CapsAlphaPool  string // Permitted capital letters
+	SmallAlphaPool string // Permitted small letters
+	DigitPool      string // Permitted digits
+	SpclCharPool   string // Permitted special characters
 }
 
 // NewPolicy returns a default password policy which can be modified
 func NewPolicy() Policy {
 	p := Policy{
-		MinLength:     6,
-		MaxLength:     16,
-		MinCapsAlpha:  0,
-		MinSmallAlpha: 0,
-		MinDigits:     0,
-		MinSpclChars:  0,
+		MinLength:      6,
+		MaxLength:      16,
+		MinCapsAlpha:   0,
+		MinSmallAlpha:  0,
+		MinDigits:      0,
+		MinSpclChars:   0,
+		CapsAlphaPool:  "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+		SmallAlphaPool: "abcdefghijklmnopqrstuvwxyz",
+		DigitPool:      "0123456789",
+		SpclCharPool:   "!@#$%^&*()-_=+,.?/:;{}[]~",
 	}
 	return p
 }
@@ -101,11 +109,11 @@ func Generate(p Policy) string {
 		return ""
 	}
 
-	capsAlpha := []byte("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
-	smallAlpha := []byte("abcdefghijklmnopqrstuvwxyz")
-	digits := []byte("0123456789")
-	spclChars := []byte("!@#$%^&*()-_=+,.?/:;{}[]~")
-	allChars := []byte(string(capsAlpha) + string(smallAlpha) + string(digits) + string(spclChars))
+	capsAlpha := []byte(p.CapsAlphaPool)
+	smallAlpha := []byte(p.SmallAlphaPool)
+	digits := []byte(p.DigitPool)
+	spclChars := []byte(p.SpclCharPool)
+	allChars := []byte(p.CapsAlphaPool + p.SmallAlphaPool + p.DigitPool + p.SpclCharPool)
 
 	passwd := CreateRandom(capsAlpha, p.MinCapsAlpha)
 

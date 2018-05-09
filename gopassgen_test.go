@@ -101,12 +101,16 @@ func TestShuffle(t *testing.T) {
 func TestAllPolicies(t *testing.T) {
 	p := NewPolicy()
 
-	p.MaxLength = 16    // Maximum total length
-	p.MinLength = 16    // Minimum total length
-	p.MinDigits = 2     // Minimum digits
-	p.MinSpclChars = 2  // Minimum special characters
-	p.MinCapsAlpha = 1  // Minimum capital letters
-	p.MinSmallAlpha = 1 // Minimum small letters
+	p.MaxLength = 16         // Maximum total length
+	p.MinLength = 16         // Minimum total length
+	p.MinDigits = 2          // Minimum digits
+	p.MinSpclChars = 2       // Minimum special characters
+	p.MinCapsAlpha = 1       // Minimum capital letters
+	p.MinSmallAlpha = 1      // Minimum small letters
+	p.CapsAlphaPool = "ABCD" // Permitted capital letters
+	p.SmallAlphaPool = "xyz" // Permitted small letters
+	p.DigitPool = "1234"     // Permitted digits
+	p.SpclCharPool = "!@#$"  // Permitted special characters
 
 	password := Generate(p)
 

@@ -12,14 +12,18 @@ go get github.com/sayanarijit/gopassgen
 
 ### Available policy options
 
-| Policy option              | Variable      | Type | Default |
-| -------------------------- | ------------- | ---- | ------- |
-| Maximum length             | MaxLength     | int  | 16      |
-| Minimum length             | MinLength     | int  | 6       |
-| Minimum capital letters    | MinCapsAlpha  | int  | 0       |
-| Minimum small letters      | MinSmallAlpha | int  | 0       |
-| Minimum digits             | MinDigits     | int  | 0       |
-| Minimum special characters | MinSpclChars  | int  | 0       |
+| Policy                       | Configuration  | Type    | Default                      |
+| ---------------------------- | -------------  | ------- | ---------------------------- |
+| Maximum length               | MaxLength      | int     | 16                           |
+| Minimum length               | MinLength      | int     | 6                            |
+| Minimum capital letters      | MinCapsAlpha   | int     | 0                            |
+| Minimum small letters        | MinSmallAlpha  | int     | 0                            |
+| Minimum digits               | MinDigits      | int     | 0                            |
+| Minimum special characters   | MinSpclChars   | int     | 0                            |
+| Permitted capital letters    | CapsAlphaPool  | string  | `ABCDEFGHIJKLMNOPQRSTUVWXYZ` |
+| Permitted small letters      | SmallAlphaPool | string  | `abcdefghijklmnopqrstuvwxyz` |
+| Permitted digits             | DigitPool      | string  | `0123456789`                 |
+| Permitted special characters | SpclCharPool   | string  | `!@#$%^&*()-_=+,.?/:;{}[]~`  |
 
 ### Example Usage
 
@@ -37,12 +41,12 @@ func main() {
 
     p := gopassgen.NewPolicy()
 
-    p.MaxLength = 16    // Maximum total length
-    p.MinLength = 16    // Minimum total length
-    p.MinDigits = 2     // Minimum digits
-    p.MinSpclChars = 2  // Minimum special characters
-    p.MinCapsAlpha = 1  // Minimum capital letters
-    p.MinSmallAlpha = 1 // Minimum small letters
+    p.MaxLength = 16      // Maximum total length
+    p.MinLength = 16      // Minimum total length
+    p.MinDigits = 2       // Minimum digits
+    p.MinSpclChars = 2    // Minimum special characters
+    p.MinCapsAlpha = 1    // Minimum capital letters
+    p.MinSmallAlpha = 1   // Minimum small letters
 
     password := gopassgen.Generate(p)
 
