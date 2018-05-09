@@ -2,7 +2,7 @@ package gopassgen
 
 /*
 Author		: Arijit Basu <sayanarijit@gmail.com>
-Docs		: https://github.com/sayanarijit/gopassgen#README
+Docs		: https://github.com/sayanarijit/gopassgen#gopassgen
 
 Usage:
 	p := gopassgen.NewPolicy()
