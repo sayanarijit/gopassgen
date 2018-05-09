@@ -1,7 +1,6 @@
 package gopassgen
 
 /*
-Version		: 0.3.1
 Author		: Arijit Basu <sayanarijit@gmail.com>
 Docs		: https://github.com/sayanarijit/gopassgen#README
 
