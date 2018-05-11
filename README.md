@@ -91,3 +91,7 @@ func main() {
     fmt.Println(string(bsPassword))
 }
 ```
+
+### Apps using gopassgen library
+
+* [gopgcli](https://github.com/sayanarijit/gopgcli)
