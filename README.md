@@ -4,7 +4,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/sayanarijit/gopassgen)](https://goreportcard.com/report/github.com/sayanarijit/gopassgen)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/sayanarijit/gopassgen/blob/master/LICENSE)
 
-To use it as a command-line tool, install [gopgcli](https://github.com/sayanarijit/gopgcli)
+To use it as a command-line tool or web app, install [gopgcli](https://github.com/sayanarijit/gopgcli) or [gopgweb](https://github.com/sayanarijit/gopgweb)
 
 ### Install
 
