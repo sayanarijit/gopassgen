@@ -11,44 +11,50 @@ Usage:
 	p.MinLength = 16    // Minimum total length
 	p.MinDigits = 2     // Minimum digits
 	p.MinSpclChars = 2  // Minimum special characters
-	p.MinCapsAlpha = 1  // Minimum capital letters
-	p.MinSmallAlpha = 1 // Minimum small letters
+	p.MinUppers = 1     // Minimum capital letters
+	p.MinLowers = 1     // Minimum small letters
 
-	password := gopassgen.Generate(p)
+	password, err := gopassgen.Generate(p)
 */
 
 import (
+	"errors"
 	"math/rand"
 	"time"
 )
 
+var (
+	// ErrMaxLengthExceeded is returned when the sum of minimum character lengths exceeded maximum length
+	ErrMaxLengthExceeded = errors.New("sum of minimum character lengths exceeded maximum password length")
+)
+
 // Policy of password to be passed in Generate() function
 type Policy struct {
-	MinLength      int    // Minimum length of password
-	MaxLength      int    // Maximum length of password
-	MinCapsAlpha   int    // Minimum length of capital letters
-	MinSmallAlpha  int    // Minimum length of small letters
-	MinDigits      int    // Minimum length of digits
-	MinSpclChars   int    // Minimum length of special characters
-	CapsAlphaPool  string // Permitted capital letters
-	SmallAlphaPool string // Permitted small letters
-	DigitPool      string // Permitted digits
-	SpclCharPool   string // Permitted special characters
+	MinLength    int    // Minimum length of password
+	MaxLength    int    // Maximum length of password
+	MinLowers    int    // Minimum length of lower case letters
+	MinUppers    int    // Minimum length of upper case letters
+	MinDigits    int    // Minimum length of digits
+	MinSpclChars int    // Minimum length of special characters
+	LowerPool    string // Permitted upper case letters
+	UpperPool    string // Permitted lower case letters
+	DigitPool    string // Permitted digits
+	SpclCharPool string // Permitted special characters
 }
 
 // NewPolicy returns a default password policy which can be modified
 func NewPolicy() Policy {
 	p := Policy{
-		MinLength:      6,
-		MaxLength:      16,
-		MinCapsAlpha:   0,
-		MinSmallAlpha:  0,
-		MinDigits:      0,
-		MinSpclChars:   0,
-		CapsAlphaPool:  "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-		SmallAlphaPool: "abcdefghijklmnopqrstuvwxyz",
-		DigitPool:      "0123456789",
-		SpclCharPool:   "!@#$%^&*()-_=+,.?/:;{}[]~",
+		MinLength:    6,
+		MaxLength:    16,
+		MinLowers:    0,
+		MinUppers:    0,
+		MinDigits:    0,
+		MinSpclChars: 0,
+		LowerPool:    "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+		UpperPool:    "abcdefghijklmnopqrstuvwxyz",
+		DigitPool:    "0123456789",
+		SpclCharPool: "!@#$%^&*()-_=+,.?/:;{}[]~",
 	}
 	return p
 }
@@ -85,15 +91,15 @@ func Shuffle(bs []byte) {
 }
 
 // Generate a new password based on given policy
-func Generate(p Policy) string {
+func Generate(p Policy) (string, error) {
 
 	// Character length based policies should not be negative
-	if p.MinLength < 0 || p.MaxLength < 0 || p.MinCapsAlpha < 0 ||
-		p.MinSmallAlpha < 0 || p.MinDigits < 0 || p.MinSpclChars < 0 {
-		panic("Character length should not be negative")
+	if p.MinLength < 0 || p.MaxLength < 0 || p.MinUppers < 0 ||
+		p.MinLowers < 0 || p.MinDigits < 0 || p.MinSpclChars < 0 {
+		return "", ErrMaxLengthExceeded
 	}
 
-	collectiveMinLength := p.MinCapsAlpha + p.MinSmallAlpha + p.MinDigits + p.MinSpclChars
+	collectiveMinLength := p.MinUppers + p.MinLowers + p.MinDigits + p.MinSpclChars
 
 	// Min length is the collective min length
 	if collectiveMinLength > p.MinLength {
@@ -102,22 +108,22 @@ func Generate(p Policy) string {
 
 	// Max length should be greater than collective minimun length
 	if p.MinLength > p.MaxLength {
-		panic("Minimum length cannot be greater than maximum length")
+		return "", ErrMaxLengthExceeded
 	}
 
 	if p.MaxLength == 0 {
-		return ""
+		return "", nil
 	}
 
-	capsAlpha := []byte(p.CapsAlphaPool)
-	smallAlpha := []byte(p.SmallAlphaPool)
+	capsAlpha := []byte(p.UpperPool)
+	smallAlpha := []byte(p.LowerPool)
 	digits := []byte(p.DigitPool)
 	spclChars := []byte(p.SpclCharPool)
-	allChars := []byte(p.CapsAlphaPool + p.SmallAlphaPool + p.DigitPool + p.SpclCharPool)
+	allChars := []byte(p.UpperPool + p.LowerPool + p.DigitPool + p.SpclCharPool)
 
-	passwd := CreateRandom(capsAlpha, p.MinCapsAlpha)
+	passwd := CreateRandom(capsAlpha, p.MinUppers)
 
-	passwd = append(passwd, CreateRandom(smallAlpha, p.MinSmallAlpha)...)
+	passwd = append(passwd, CreateRandom(smallAlpha, p.MinLowers)...)
 	passwd = append(passwd, CreateRandom(digits, p.MinDigits)...)
 	passwd = append(passwd, CreateRandom(spclChars, p.MinSpclChars)...)
 
@@ -130,5 +136,5 @@ func Generate(p Policy) string {
 
 	Shuffle(passwd)
 
-	return string(passwd)
+	return string(passwd), nil
 }

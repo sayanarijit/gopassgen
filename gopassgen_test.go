@@ -11,7 +11,7 @@ func TestZeroLenPassword(t *testing.T) {
 	p.MaxLength = 0 // Maximum total length
 	p.MinLength = 0 // Minimum total length
 
-	password := Generate(p)
+	password, _ := Generate(p)
 
 	fmt.Println("Zero length password:", password)
 
@@ -23,7 +23,7 @@ func TestZeroLenPassword(t *testing.T) {
 func TestRandomPassword(t *testing.T) {
 	p := NewPolicy()
 
-	password := Generate(p)
+	password, _ := Generate(p)
 
 	fmt.Println("Random password:", password)
 
@@ -37,7 +37,7 @@ func TestMin16Digits(t *testing.T) {
 
 	p.MinDigits = 16
 
-	password := Generate(p)
+	password, _ := Generate(p)
 
 	fmt.Println("Min 16 digits password:", password)
 
@@ -52,7 +52,7 @@ func TestMin10Digits5SpclChars(t *testing.T) {
 	p.MinDigits = 10
 	p.MinSpclChars = 5
 
-	password := Generate(p)
+	password, _ := Generate(p)
 
 	fmt.Println("Min 10 digits, 5 special chars password:", password)
 
@@ -65,9 +65,9 @@ func TestAllCaps10Chars(t *testing.T) {
 	p := NewPolicy()
 
 	p.MaxLength = 10
-	p.MinCapsAlpha = 10
+	p.MinUppers = 10
 
-	password := Generate(p)
+	password, _ := Generate(p)
 
 	fmt.Println("10 letter all capital password:", password)
 
@@ -101,18 +101,18 @@ func TestShuffle(t *testing.T) {
 func TestAllPolicies(t *testing.T) {
 	p := NewPolicy()
 
-	p.MaxLength = 16         // Maximum total length
-	p.MinLength = 16         // Minimum total length
-	p.MinDigits = 2          // Minimum digits
-	p.MinSpclChars = 2       // Minimum special characters
-	p.MinCapsAlpha = 1       // Minimum capital letters
-	p.MinSmallAlpha = 1      // Minimum small letters
-	p.CapsAlphaPool = "ABCD" // Permitted capital letters
-	p.SmallAlphaPool = "xyz" // Permitted small letters
-	p.DigitPool = "1234"     // Permitted digits
-	p.SpclCharPool = "!@#$"  // Permitted special characters
+	p.MaxLength = 16        // Maximum total length
+	p.MinLength = 16        // Minimum total length
+	p.MinDigits = 2         // Minimum digits
+	p.MinLowers = 1         // Minimum lower case letters
+	p.MinUppers = 1         // Minimum upper case letters
+	p.MinSpclChars = 2      // Minimum special characters
+	p.LowerPool = "abcd"    // Permitted capital letters
+	p.UpperPool = "XYZ"     // Permitted small letters
+	p.DigitPool = "1234"    // Permitted digits
+	p.SpclCharPool = "!@#$" // Permitted special characters
 
-	password := Generate(p)
+	password, _ := Generate(p)
 
 	fmt.Println("All in one policy password:", password)
 
