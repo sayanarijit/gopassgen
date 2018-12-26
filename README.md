@@ -50,10 +50,8 @@ func main() {
     p.MinUppers = 1       // Minimum upper case letters
     p.MinLowers = 1       // Minimum lower case letters
 
-    password, err := gopassgen.Generate(p)
-    if err != nil {
-        fmt.Println(password)
-    }
+    password, _ := gopassgen.Generate(p)
+    fmt.Println(password)
 }
 ```
 
