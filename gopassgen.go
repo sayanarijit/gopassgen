@@ -51,8 +51,8 @@ func NewPolicy() Policy {
 		MinUppers:    0,
 		MinDigits:    0,
 		MinSpclChars: 0,
-		LowerPool:    "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-		UpperPool:    "abcdefghijklmnopqrstuvwxyz",
+		LowerPool:    "abcdefghijklmnopqrstuvwxyz",
+		UpperPool:    "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
 		DigitPool:    "0123456789",
 		SpclCharPool: "!@#$%^&*()-_=+,.?/:;{}[]~",
 	}
