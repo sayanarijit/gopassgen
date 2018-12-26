@@ -18,12 +18,12 @@ go get github.com/sayanarijit/gopassgen
 | ---------------------------- | -------------  | ------- | ---------------------------- |
 | Maximum length               | MaxLength      | int     | 16                           |
 | Minimum length               | MinLength      | int     | 6                            |
-| Minimum capital letters      | MinCapsAlpha   | int     | 0                            |
-| Minimum small letters        | MinSmallAlpha  | int     | 0                            |
+| Minimum lower case letters   | MinLowers      | int     | 0                            |
+| Minimum upper case lette     | MinUppers      | int     | 0                            |
 | Minimum digits               | MinDigits      | int     | 0                            |
 | Minimum special characters   | MinSpclChars   | int     | 0                            |
-| Permitted capital letters    | CapsAlphaPool  | string  | `ABCDEFGHIJKLMNOPQRSTUVWXYZ` |
-| Permitted small letters      | SmallAlphaPool | string  | `abcdefghijklmnopqrstuvwxyz` |
+| Permitted upper case letters | UpperPool      | string  | `ABCDEFGHIJKLMNOPQRSTUVWXYZ` |
+| Permitted lower case letters | LowerPool      | string  | `abcdefghijklmnopqrstuvwxyz` |
 | Permitted digits             | DigitPool      | string  | `0123456789`                 |
 | Permitted special characters | SpclCharPool   | string  | `!@#$%^&*()-_=+,.?/:;{}[]~`  |
 
@@ -47,12 +47,13 @@ func main() {
     p.MinLength = 16      // Minimum total length
     p.MinDigits = 2       // Minimum digits
     p.MinSpclChars = 2    // Minimum special characters
-    p.MinCapsAlpha = 1    // Minimum capital letters
-    p.MinSmallAlpha = 1   // Minimum small letters
+    p.MinUppers = 1       // Minimum upper case letters
+    p.MinLowers = 1       // Minimum lower case letters
 
-    password := gopassgen.Generate(p)
-
-    fmt.Println(password)
+    password, err := gopassgen.Generate(p)
+    if err != nil {
+        fmt.Println(password)
+    }
 }
 ```
 

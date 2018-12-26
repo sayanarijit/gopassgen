@@ -11,8 +11,8 @@ Usage:
 	p.MinLength = 16    // Minimum total length
 	p.MinDigits = 2     // Minimum digits
 	p.MinSpclChars = 2  // Minimum special characters
-	p.MinUppers = 1     // Minimum capital letters
-	p.MinLowers = 1     // Minimum small letters
+	p.MinUppers = 1     // Minimum upper case letters
+	p.MinLowers = 1     // Minimum lower case letters
 
 	password, err := gopassgen.Generate(p)
 */
