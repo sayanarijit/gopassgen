@@ -24,7 +24,10 @@ import (
 )
 
 var (
-	// ErrMaxLengthExceeded is returned when the sum of minimum character lengths exceeded maximum length
+	// ErrNegativeLengthNotAllowed is returned when user tries to pass negative length
+	ErrNegativeLengthNotAllowed = errors.New("negative length not allowed")
+
+	// ErrMaxLengthExceeded is returned when the sum of minimum character lengths exceeds maximum length
 	ErrMaxLengthExceeded = errors.New("sum of minimum character lengths exceeded maximum password length")
 )
 
@@ -96,7 +99,7 @@ func Generate(p Policy) (string, error) {
 	// Character length based policies should not be negative
 	if p.MinLength < 0 || p.MaxLength < 0 || p.MinUppers < 0 ||
 		p.MinLowers < 0 || p.MinDigits < 0 || p.MinSpclChars < 0 {
-		return "", ErrMaxLengthExceeded
+		return "", ErrNegativeLengthNotAllowed
 	}
 
 	collectiveMinLength := p.MinUppers + p.MinLowers + p.MinDigits + p.MinSpclChars
