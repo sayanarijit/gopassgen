@@ -120,3 +120,27 @@ func TestAllPolicies(t *testing.T) {
 		t.Errorf("Length is expected to be 16, but got %v", len(password))
 	}
 }
+
+func TestNegativeLenPassword(t *testing.T) {
+	p := NewPolicy()
+
+	p.MaxLength = -1
+	p.MinLength = 0
+
+	_, err := Generate(p)
+	if err != ErrNegativeLengthNotAllowed {
+		t.Errorf("ErrNegativeLengthNotAllowed is expected to be returned, but got %v", err)
+	}
+}
+
+func TestMinCharExceedMaxChar(t *testing.T) {
+	p := NewPolicy()
+
+	p.MaxLength = 5
+	p.MinLength = 6
+
+	_, err := Generate(p)
+	if err != ErrMaxLengthExceeded {
+		t.Errorf("ErrMaxLengthExceeded is expected to be returned, but got %v", err)
+	}
+}
